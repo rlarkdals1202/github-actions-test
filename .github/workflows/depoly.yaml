@@ -3,26 +3,22 @@ name: Github Actions Test
 on:
   push:
     branches:
-      - main
+      - "**"
 
 jobs:
   my-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello World 출력
-        run: echo 'Hello World'
+      - name: Github Repository 파일 불러오기
+        uses: actions/checkout@v4
 
-      - name: 여러 명령어 작성
-        run: |
-          echo 'Good'
-          echo 'Morning'
+      - name: Node.js 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
-      - name: Github Actions 자체에 저장되어 있는 변수 사용
-        run: |
-          echo $GITHUB_SHA
-          echo $GITHUB_REPOSITORY
+      - name: 의존성 설치
+        run: npm ci
 
-      - name: Github Actions Secret 변수 사용해보기
-        run: |
-          echo ${{ secrets.MY_NAME }}
-          echo ${{ secrets.MY_AGE }}
+      - name: 빌드하기
+        run: npm run build
