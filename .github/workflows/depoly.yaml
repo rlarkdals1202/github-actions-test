@@ -18,7 +18,7 @@ jobs:
           node-version: "22"
 
       - name: 의존성 설치
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 빌드하기
-        run: npm run build
+        run: pnpm build
